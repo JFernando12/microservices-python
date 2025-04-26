@@ -22,7 +22,7 @@ def login():
     # check db for username and password
     cur = mysql.connection.cursor()
     res = cur.execute(
-        "SELECT email, password FROM user WHERE email=%s", (auth.username)
+        "SELECT email, password FROM user WHERE email=%s", (auth.username,)
     )
 
     if res > 0:
@@ -52,13 +52,15 @@ def createJWT(username, secret, authz):
 @server.route("/validate", methods=["POST"])
 def validate():
     encoded_jwt = request.headers["Authorization"]
+    print('encoded_jwt1: ', encoded_jwt, flush=True)
 
     if not encoded_jwt:
         return "Missing credentials", 401
     encoded_jwt = encoded_jwt.split(" ")[1]
+    print('encoded_jwt2: ', encoded_jwt, flush=True)
     try:
         decoded = jwt.decode(
-            encoded_jwt, os.environ.get("JWT_SECRET"), algorithm=["HS256"]
+            encoded_jwt, os.environ.get("JWT_SECRET"), algorithms=["HS256"]
         )
     except:
         return "Not authorized", 403

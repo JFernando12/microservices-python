@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: jfernando12/python-auth
+          image: jfernando12/python-auth:latest
           ports:
             - containerPort: 5000
           envFrom:

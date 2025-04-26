@@ -10,12 +10,12 @@ server = Flask(__name__)
 
 mongo_video = PyMongo(
   server,
-  uri="mongodb://host.minikube.internal:27017/videos"
+  uri="mongodb://host.docker.internal:27017/videos"
 )
 
 mongo_mp3 = PyMongo(
   server,
-  uri="mongodb://host.minikube.internal:27017/mp3s"
+  uri="mongodb://host.docker.internal:27017/mp3s"
 )
 
 fs_videos = gridfs.GridFS(mongo_video.db)
@@ -38,8 +38,9 @@ def upload():
   access, err = validate.token(request)
   if err:
     return err
-  
+  print('access1: ', access)
   access = json.loads(access)
+  print('access2: ', access)
   if access["admin"]:
     if len(request.files) > 1 or len(request.files) < 1:
       return "Exactly 1 file required", 400
