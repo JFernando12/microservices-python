@@ -10,7 +10,7 @@ server.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
 server.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
 server.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
 server.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
-server.config['MYSQL_PORT'] = os.getenv('MYSQL_PORT')
+server.config['MYSQL_PORT'] = int(os.getenv('MYSQL_PORT'))
 
 # routes
 @server.route('/login', methods=['POST'])
